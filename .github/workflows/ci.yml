@@ -1,0 +1,16 @@
+name: mf-mono Build
+on:
+  push:
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0"
+      - run: dotnet build Numbers
+      - run: ./runTest.sh

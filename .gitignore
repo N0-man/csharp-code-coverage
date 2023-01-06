@@ -339,3 +339,5 @@ localDevSetup/keycloak-db/
 
 #exclude Properties, so that devs can have few secrets in this file 
 Properties/
+
+XUnit.Coverlet.Collector/.results
