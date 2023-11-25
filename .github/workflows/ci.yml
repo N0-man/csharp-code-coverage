@@ -1,4 +1,4 @@
-name: mf-mono Build
+name: csharp-code Build
 on:
   push:
 jobs:
@@ -14,3 +14,33 @@ jobs:
           dotnet-version: "8.0"
       - run: dotnet build Numbers
       - run: ./runTest.sh
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-report-${{ github.sha }}
+          path: XUnit.Coverlet.Collector/.results/reports
+  coverage:
+    name: Coverage Report
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: csharp-code-coverage
+          persist-credentials: false
+      - uses: actions/download-artifact@v3
+        with:
+          name: coverage-report-${{ github.sha }}
+          path: csharp-code-coverage/coverage-report-${{ github.sha }}
+      - name: publish
+        working-directory: csharp-code-coverage/
+        run: |
+          ls -lrt
+          git config user.name ${{ secrets.USERNAME }}
+          git config user.email ${{ secrets.EMAIL }}
+          git add .
+          git commit -m "upload coverage report"
+          git push 'https://${{ secrets.USERNAME }}:${{ secrets.PAT }}@github.com/N0-man/csharp-code-coverage.git' gh-pages
+      - run: echo "Coverage Reprot https://n0-man.github.io/csharp-code-coverage/coverage-report-${{ github.sha }}"
