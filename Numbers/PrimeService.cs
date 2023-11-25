@@ -18,5 +18,10 @@
             }
             return true;
         }
+
+        public bool IsNotPrime(int number)
+        {
+            return !IsPrime(number);
+        }
     }
 }
