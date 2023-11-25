@@ -1,11 +1,1 @@
-# Csharp Code coverage using Xunit + Coverlet Collector
-
-### Build
-```
-dotnet build
-```
-
-### Test with coverage
-```
-./runTest.sh
-```
+# GitHub Pages to manage Coverage Reports
